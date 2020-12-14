@@ -7,6 +7,23 @@
         <link rel="stylesheet" href="assets/css/main.css" />
         <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
         <link rel="shortcut icon" href="images/favicon.ico"/>
+        <script>
+function run() {
+    var vodlink = document.getElementById('vod').value;
+    document.getElementById('main').innerHTML = "<br/>Processing... do not close this tab<br/><br/>";
+    $.ajax({
+        type: "POST",
+        url : "results",
+        data: {
+            vod: vodlink 
+            // vod: vodlink,
+            // timestamp: timestamp
+        }
+    }).done(function(e) {
+        console.log("Logging: " + e);
+    });
+}
+        </script>
     </head>
     <body class="is-preload">
 
@@ -27,6 +44,7 @@
                             <section id="content" class="main">
 
                                 <input id="vod" style="width: 800px" name="vod" placeholder=" Enter YouTube URL">
+                                <button class="button small primary" style="position: relative; top: -2px;" onclick="run()">Go</button>
                                 <br/><br/>
 
                                 <input type="radio" id="radio-check-scores" name="radio" checked>
