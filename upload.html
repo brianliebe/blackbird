@@ -8,20 +8,76 @@
         <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
         <link rel="shortcut icon" href="images/favicon.ico"/>
         <script>
+var interval_id = 0;
+var video_id = ""
+
+var loop = function() {
+    $.post('/get/', {'video_id':video_id}, function(data) {
+        data = data.split('|');
+        stage = data[0];
+        if (stage == "error") {
+            error_msg = data[1];
+            console.log("Received error: " + error_msg);
+            document.getElementById('main').innerHTML = "<br/>An error occurred. Please try again later.<br/><br/>";
+            clearInterval(interval_id);
+        } else if (stage == "waiting") {
+            document.getElementById('main').innerHTML = "<br/>Loading...<br/><br/>";
+        } else {
+            current_sec = data[1];
+            total_sec = data[2];
+            progress = data[3];
+            if (progress.toString() == "100") {
+                document.getElementById('main').innerHTML = "<br/>Done.<br/><br/>";
+                clearInterval(interval_id);
+            } else {
+                document.getElementById('main').innerHTML = "<br/>Completed: " + current_sec + " / " + total_sec + " (" + progress + "%)<br/><br/>";
+            }
+        }
+    });
+}
+
+function getYoutubeId(url) {
+    url = url.trim();
+    if (url.includes("youtube.com")) {
+        var index = url.indexOf("watch?v=") + 8
+        return url.substring(index, index + 11)
+    } else if (url.includes("youtu.be")) {
+        var index = url.lastIndexOf("/") + 1
+        return url.substring(index, index + 11)
+    } else {
+        return null;
+    }
+}
+
 function run() {
-    var vodlink = document.getElementById('vod').value;
+    var vodlink = document.getElementById('vodlink').value;
+    video_id = getYoutubeId(vodlink);
+    if (video_id == null) {
+      alert("Could not parse YouTube VOD url: " + vodlink);
+      return;
+    }
+
+    var starttype = "scores";
+    var radio_buttons = document.getElementsByName('radio');
+    for (var i = 0, length = radio_buttons.length; i < length; i++) {
+        if (radio_buttons[i].checked) {
+            starttype = radio_buttons[i].value;
+            break;
+        }
+    }
+
     document.getElementById('main').innerHTML = "<br/>Processing... do not close this tab<br/><br/>";
     $.ajax({
         type: "POST",
-        url : "results",
+        url : "start",
         data: {
-            vod: vodlink 
-            // vod: vodlink,
-            // timestamp: timestamp
+            video_id: video_id,
+            starttype: starttype
         }
     }).done(function(e) {
         console.log("Logging: " + e);
     });
+    interval_id = setInterval(loop, 5000);
 }
         </script>
     </head>
@@ -43,15 +99,15 @@ function run() {
                         <!-- Content -->
                             <section id="content" class="main">
 
-                                <input id="vod" style="width: 60%" name="vod" placeholder=" Enter YouTube URL">
+                                <input id="vodlink" name="vodlink" style="width: 60%" placeholder=" Enter YouTube URL">
                                 <button class="button small primary" style="position: relative; top: -2px;" onclick="run()">Go</button>
                                 <br/><br/>
 
-                                <input type="radio" id="radio-check-scores" name="radio" checked>
+                                <input type="radio" id="radio-check-scores" value="scores" name="radio" checked>
                                 <label for="radio-check-scores">Scores</label>
-                                <input type="radio" id="radio-check-killfeed" name="radio" disabled>
+                                <input type="radio" id="radio-check-killfeed" value="killfeed" name="radio" disabled>
                                 <label for="radio-check-killfeed">Killfeed <img src="images/pro.png" style="width: 30px; height: auto;"></label>
-                                <input type="radio" id="radio-check-spawns" name="radio" disabled>
+                                <input type="radio" id="radio-check-spawns" value="spawns" name="radio" disabled>
                                 <label for="radio-check-spawns">Spawns <img src="images/pro.png" style="width: 30px; height: auto;"></label>
                             </section>
 
