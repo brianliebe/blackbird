@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>About</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="assets/css/main.css" />
+        <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+        <link rel="shortcut icon" href="images/favicon.ico"/>
+    </head>
+    <body class="is-preload">
+
+        <!-- Wrapper -->
+            <div id="wrapper">
+
+                <!-- Header -->
+                    <header id="header">
+                        <h1>About</h1>
+                        <p>
+                            Learn a little more about how it works<br/>
+                        </p>
+                    </header>
+
+                    <div id="main">
+
+                        <!-- Content -->
+                            <section id="content" class="main">
+
+                                <h1>Overview</h1>
+                                <p>
+                                    Project Blackbird is a python-driven project that analyzes Call of Duty vods by quickly parsing each frame to read scores, track player
+                                    positions, and dynamically determine spawns, hardpoints, etc. Spectator mode is used to more accurately determine movement on the 
+                                    minimap, and is required for any VODs uploaded requiring the minimap (such as Killfeed and Spawns). At this time, processing just the 
+                                    scores also requires spectator mode, as it's quicker and much more accurate than using regular gameplay footage. 
+                                </p>
+                            </section>
+
+                            <section id="content" class="main">
+
+                                <h1>How It Works</h1>
+                                <p>
+                                    When you upload a video to the site, our python backend processes the video frame-by-frame, and extracts information which is then given
+                                    to you by CSV or uploaded to our database for you to access.
+                                </p>
+                                <img src="images/tracker_0.png" style="border-radius: 1%;">
+                                <p>
+                                    For example, the above image shows how players are tracked and how hardpoints are detected. 
+                                </p>
+                            </section>
+
+                            <section id="content" class="main">
+
+                                <h1>More coming soon...</h1>
+                            </section>
+
+                            <section style="text-align: center;">
+                                <a href="./">Return to Homepage</a>
+                            </section>
+                            <br/>
+
+                    </div>
+
+                    <!-- Footer -->
+                        <footer id="footer">
+                            <section>
+                                <h2>About the Project</h2>
+                                <p>This site was created by Brian Liebe and Doug Liebe</p>
+                            </section>
+                            <section>
+                                <h2>Contact Us</h2>
+                                <dl class="alt">
+                                    <dt>Twitter</dt>
+                                    <dd><a href="https://twitter.com/brianjliebe">@brianjliebe</a> / <a href="https://twitter.com/dougliebe">@dougliebe</a></dd>
+                                    <dt>Email</dt>
+                                    <dd><a href="mailto:brian@brianliebe.com">brian@brianliebe.com</a></dd>
+                                </dl>
+                            </section>
+                            <p class="copyright">&copy; 2020 Created by <a href="https://twitter.com/brianjliebe">Brian Liebe</a></p>
+                        </footer>
+
+            </div>
+
+        <!-- Scripts -->
+            <script src="assets/js/jquery.min.js"></script>
+            <script src="assets/js/jquery.scrollex.min.js"></script>
+            <script src="assets/js/jquery.scrolly.min.js"></script>
+            <script src="assets/js/browser.min.js"></script>
+            <script src="assets/js/breakpoints.min.js"></script>
+            <script src="assets/js/util.js"></script>
+            <script src="assets/js/main.js"></script>
+
+    </body>
+</html>
